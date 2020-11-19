@@ -1,0 +1,25 @@
+{
+  "name": "imgup",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "bin": "./index.js",
+  "scripts": {
+    "format": "prettier --write \"**/**/*.{ts,js,tsx,jsx,md,html,css}\""
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn format"
+    }
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "chalk": "^4.1.0",
+    "commander": "^6.2.0",
+    "dotenv": "^8.2.0",
+    "form-data": "^3.0.0",
+    "husky": "^4.3.0",
+    "jsome": "^2.5.0",
+    "prettier": "^2.1.2"
+  }
+}
