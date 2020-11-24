@@ -5,21 +5,29 @@ const path = require('path');
 
 const axios = require('axios');
 const FormData = require('form-data');
+const chalk = require('chalk');
 const { program } = require('commander');
-const jsom = require('jsome');
+const { capitalize } = require('lodash/fp');
+
 require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 // This ID seems not necessary at all, but we're putting it in the request header anyway since it's
 // documented in the official docs
 const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
-program.option('-f, --file <string>', 'specify an image file path');
+program.requiredOption('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
 
 const data = new FormData();
 const file = program.file;
+
 const filePath = path.resolve(process.cwd(), file);
 const baseName = path.basename(filePath);
 const fileName = path.parse(baseName).name;
+
+if (!fs.existsSync(filePath)) {
+  return console.log(`${filePath} doesn't exist!`);
+}
+
 data.append('image', fs.createReadStream(filePath));
 data.append('name', fileName);
 data.append('title', fileName);
@@ -36,7 +44,11 @@ const config = {
 
 axios(config)
   .then((response) => {
-    jsom(response.data);
+    console.log('Image URL:', chalk.bold(response.data.data.link));
+    console.log(
+      'Markdown:',
+      `![${capitalize(fileName)} image](${response.data.data.link})`,
+    );
   })
   .catch((error) => {
     console.log(error);
