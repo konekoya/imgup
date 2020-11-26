@@ -1,16 +1,14 @@
 #!/usr/bin/env node
 
-import { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
-
+import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 import fs from 'fs';
 import path from 'path';
-
-import axios from 'axios';
 import formData from 'form-data';
 import chalk from 'chalk';
 import ora from 'ora';
 import { program } from 'commander';
 import { capitalize } from 'lodash/fp';
+
 // @ts-ignore
 import packageJson from '../package.json';
 
