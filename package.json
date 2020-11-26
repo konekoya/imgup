@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-  "bin": "./index.js",
+  "bin": "./dist/index.js",
   "scripts": {
-    "format": "prettier --write \"**/**/*.{ts,js,tsx,jsx,md,html,css}\""
+    "format": "prettier --write \"**/**/*.{ts,js,tsx,jsx,md,html,css}\"",
+    "build": "tsc",
+    "typecheck": "tsc --noEmit"
   },
   "husky": {
     "hooks": {
@@ -13,6 +15,9 @@
     }
   },
   "dependencies": {
+    "@types/form-data": "^2.5.0",
+    "@types/lodash": "^4.14.165",
+    "@types/node": "^14.14.10",
     "axios": "^0.21.0",
     "chalk": "^4.1.0",
     "commander": "^6.2.0",

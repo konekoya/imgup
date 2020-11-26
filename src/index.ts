@@ -1,17 +1,20 @@
 #!/usr/bin/env node
 
-const fs = require('fs');
-const path = require('path');
+import { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
 
-const axios = require('axios');
-const FormData = require('form-data');
-const chalk = require('chalk');
-const ora = require('ora');
-const { program } = require('commander');
-const { capitalize } = require('lodash/fp');
-const packageJson = require('./package.json');
+import fs from 'fs';
+import path from 'path';
 
-require('dotenv').config({ path: '.env' });
+import axios from 'axios';
+import formData from 'form-data';
+import chalk from 'chalk';
+import ora from 'ora';
+import { program } from 'commander';
+import { capitalize } from 'lodash/fp';
+// @ts-ignore
+import packageJson from '../package.json';
+
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 
 // This ID seems not necessary at all, but we're putting it in the request header anyway since it's
 // documented in the official docs
@@ -21,10 +24,11 @@ program
   .option('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
 
-const data = new FormData();
+const data = new formData();
 const file = program.file;
 
 if (!file) {
+  // @ts-ignore
   return console.log('You should provide a file via --file or -f');
 }
 
@@ -33,6 +37,7 @@ const baseName = path.basename(filePath);
 const fileName = path.parse(baseName).name;
 
 if (!fs.existsSync(filePath)) {
+  // @ts-ignore
   return console.log(`${filePath} doesn't exist!`);
 }
 
@@ -48,12 +53,12 @@ const config = {
     ...data.getHeaders(),
   },
   data: data,
-};
+} as AxiosRequestConfig;
 
 const spinner = ora('Uploading image to imgur...').start();
 
 axios(config)
-  .then((response) => {
+  .then((response: AxiosResponse) => {
     spinner.succeed('Success');
     console.log('Image URL:', chalk.bold(response.data.data.link));
     console.log(
@@ -61,7 +66,7 @@ axios(config)
       `![${capitalize(fileName)} image](${response.data.data.link})`,
     );
   })
-  .catch((error) => {
+  .catch((error: AxiosError) => {
     spinner.succeed('Failed');
     console.log(error);
   });
