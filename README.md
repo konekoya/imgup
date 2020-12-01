@@ -10,9 +10,11 @@ imgup -file ./a/path/to/an/image.jpg
 
 ## TODOs
 
-- [ ] Add error handling logic
-- [ ] Should output markdown image url instead of whole JSON
+- [x] Add error handling logic
+- [x] Should output markdown image url instead of whole JSON
 - [ ] Linting
+- [ ] Better error handling
+- [ ] Publish to npm registry
 
 License
 

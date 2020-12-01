@@ -7,6 +7,7 @@
   "scripts": {
     "format": "prettier --write \"**/**/*.{ts,js,tsx,jsx,md,html,css}\"",
     "build": "tsc",
+    "start": "tsc --watch",
     "typecheck": "tsc --noEmit"
   },
   "husky": {

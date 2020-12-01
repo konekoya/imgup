@@ -9,17 +9,13 @@ import ora from 'ora';
 import { program } from 'commander';
 import { capitalize } from 'lodash/fp';
 
-// @ts-ignore
-import packageJson from '../package.json';
-
-require('dotenv').config({ path: path.resolve(__dirname, '.env') });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 // This ID seems not necessary at all, but we're putting it in the request header anyway since it's
 // documented in the official docs
 const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
-program
-  .version(packageJson.version)
-  .option('-f, --file <string>', 'specify an image file path');
+
+program.option('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
 
 const data = new formData();
@@ -65,6 +61,6 @@ axios(config)
     );
   })
   .catch((error: AxiosError) => {
-    spinner.succeed('Failed');
+    spinner.fail('Failed');
     console.log(error);
   });
