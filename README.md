@@ -1,11 +1,21 @@
 # imgup
 
-A little program for uploading image to imgur
+Upload images to imgur via [imgur API](https://apidocs.imgur.com/)
 
 ## Usage
 
 ```sh
-imgup -file ./a/path/to/an/image.jpg
+Usage: imgup [options]
+
+Options:
+  -f, --file <string>  specify an image file path
+  -h, --help           display help for command
+```
+
+## Example
+
+```sh
+imgup --file ./a/path/to/an/image.jpg
 ```
 
 ## TODOs

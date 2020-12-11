@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 
-import axios, { AxiosError, AxiosResponse, AxiosRequestConfig } from 'axios';
-import fs from 'fs';
-import path from 'path';
-import formData from 'form-data';
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import chalk from 'chalk';
-import ora from 'ora';
 import { program } from 'commander';
+import formData from 'form-data';
+import fs from 'fs';
 import { capitalize } from 'lodash/fp';
+import ora from 'ora';
+import path from 'path';
 
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
@@ -19,7 +19,7 @@ program.option('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
 
 const data = new formData();
-const file = program.file;
+const file = program.file as string;
 
 if (!file) {
   // @ts-ignore

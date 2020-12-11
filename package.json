@@ -12,7 +12,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "yarn format"
+      "pre-push": "yarn format && yarn typecheck"
     }
   },
   "dependencies": {
