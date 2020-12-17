@@ -1,6 +1,6 @@
 # imgup
 
-Upload images to imgur via [imgur API](https://apidocs.imgur.com/)
+Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/)
 
 ## Usage
 
