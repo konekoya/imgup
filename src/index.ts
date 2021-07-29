@@ -9,12 +9,6 @@ import { capitalize } from 'lodash/fp';
 import ora from 'ora';
 import path from 'path';
 
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-
-// This ID seems not necessary at all, but we're putting it in the request header anyway since it's
-// documented in the official docs
-const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
-
 program.option('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
 
@@ -23,7 +17,7 @@ const file = program.file as string;
 
 if (!file) {
   // @ts-ignore
-  return console.log('You should provide a file via --file or -f');
+  return console.log('You should provide a file path via `--file` flag');
 }
 
 const filePath = path.resolve(process.cwd(), file);
@@ -42,10 +36,7 @@ data.append('title', fileName);
 const config = {
   method: 'post',
   url: 'https://api.imgur.com/3/upload',
-  headers: {
-    Authorization: `Client-ID ${CLIENT_ID}`,
-    ...data.getHeaders(),
-  },
+  headers: data.getHeaders(),
   data: data,
 } as AxiosRequestConfig;
 
