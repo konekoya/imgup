@@ -2,7 +2,7 @@
 
 Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/)
 
-> This package is not released on npm
+> ⚠️&nbsp;&nbsp;This package is not released on npm
 
 ## Usage
 
