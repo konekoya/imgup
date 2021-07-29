@@ -2,6 +2,8 @@
 
 Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/)
 
+> This package is not released on npm
+
 ## Usage
 
 ```sh
@@ -16,6 +18,11 @@ Options:
 
 ```sh
 imgup --file ./a/path/to/an/image.jpg
+
+# Response
+✔ Success
+Image URL: https://i.imgur.com/example.png
+Markdown: ![Example image](https://i.imgur.com/example.png)
 ```
 
 ## TODOs
