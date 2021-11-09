@@ -32,6 +32,7 @@ Markdown: ![Example image](https://i.imgur.com/example.png)
 - [x] Better error handling
 - [ ] Linting
 - [ ] Publish to npm registry
+- [ ] Add GitHub action
 
 License
 
