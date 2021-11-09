@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
+    "module": "ESNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "target": "es6",
@@ -15,5 +15,7 @@
     "listEmittedFiles": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"]
+  "include": [
+    "src/**/*"
+  ]
 }

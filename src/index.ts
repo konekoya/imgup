@@ -3,13 +3,18 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import chalk from 'chalk';
 import { program } from 'commander';
+import * as dotenv from 'dotenv';
 import formData from 'form-data';
 import fs from 'fs';
-import { capitalize } from 'lodash/fp';
+import capitalize from 'lodash/fp/capitalize.js';
 import ora from 'ora';
-import path from 'path';
+import path, { dirname } from 'path';
+import { fileURLToPath } from 'url';
 
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
 // This ID seems not necessary at all, but we're putting it in the request header anyway since it's
 // documented in the official docs
@@ -17,13 +22,16 @@ const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 program.option('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
+const options = program.opts()
 
 const data = new formData();
-const file = program.file as string;
+const file = options.file as string;
 
 if (!file) {
-  // @ts-ignore
-  return console.log('You should provide a file via --file or -f');
+  console.log('You should provide a file via --file or -f');
+  console.log();
+  program.outputHelp();
+  process.exit(1)
 }
 
 const filePath = path.resolve(process.cwd(), file);
@@ -31,8 +39,8 @@ const baseName = path.basename(filePath);
 const fileName = path.parse(baseName).name;
 
 if (!fs.existsSync(filePath)) {
-  // @ts-ignore
-  return console.log(`${filePath} doesn't exist!`);
+  console.log(`${filePath} doesn't exist!`);
+  process.exit(1)
 }
 
 data.append('image', fs.createReadStream(filePath));
