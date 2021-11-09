@@ -1,8 +1,8 @@
 # imgup
 
-Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/)
+Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/). Useful when you're working with Markdown. The output result can be used directly in the Markdown.
 
-> ⚠️&nbsp;&nbsp;This package is not available on npm
+> ⚠️&nbsp;&nbsp;This package is not available on npm yet
 
 ## Usage
 
@@ -29,8 +29,8 @@ Markdown: ![Example image](https://i.imgur.com/example.png)
 
 - [x] Add error handling logic
 - [x] Should output markdown image url instead of whole JSON
+- [x] Better error handling
 - [ ] Linting
-- [ ] Better error handling
 - [ ] Publish to npm registry
 
 License
