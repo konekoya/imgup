@@ -22,7 +22,7 @@ const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 program.option('-f, --file <string>', 'specify an image file path');
 program.parse(process.argv);
-const options = program.opts()
+const options = program.opts();
 
 const data = new formData();
 const file = options.file as string;
@@ -31,7 +31,7 @@ if (!file) {
   console.log('You should provide a file via --file or -f');
   console.log();
   program.outputHelp();
-  process.exit(1)
+  process.exit(1);
 }
 
 const filePath = path.resolve(process.cwd(), file);
@@ -40,7 +40,7 @@ const fileName = path.parse(baseName).name;
 
 if (!fs.existsSync(filePath)) {
   console.log(`${filePath} doesn't exist!`);
-  process.exit(1)
+  process.exit(1);
 }
 
 data.append('image', fs.createReadStream(filePath));
