@@ -20,7 +20,15 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') });
 // documented in the official docs
 const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
-program.option('-f, --file <string>', 'specify an image file path');
+// There are some crazy issues with the TS and the new module system. So instead of importing the
+// package.json, we will just read it via the fs module... 😢
+const packageJSONFilePath = path.resolve(__dirname, '../package.json');
+const packageJSON = JSON.parse(fs.readFileSync(packageJSONFilePath, 'utf8'));
+const appVersion = packageJSON.version;
+
+program
+  .option('-f, --file <string>', 'specify an image file path')
+  .version(appVersion);
 program.parse(process.argv);
 const options = program.opts();
 

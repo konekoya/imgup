@@ -2,8 +2,6 @@
 
 Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/). Useful when you're working with Markdown. The output result can be used directly in the Markdown.
 
-> ⚠️&nbsp;&nbsp;This package is not available on npm yet
-
 ## Usage
 
 ```sh
@@ -30,9 +28,9 @@ Markdown: ![Example image](https://i.imgur.com/example.png)
 - [x] Add error handling logic
 - [x] Should output markdown image url instead of whole JSON
 - [x] Better error handling
-- [ ] Linting
-- [ ] Publish to npm registry
+- [x] Publish to npm registry
 - [ ] Add GitHub action
+- [ ] Linting
 
 License
 
