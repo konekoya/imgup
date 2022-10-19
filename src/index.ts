@@ -26,9 +26,11 @@ const packageJSONFilePath = path.resolve(__dirname, '../package.json');
 const packageJSON = JSON.parse(fs.readFileSync(packageJSONFilePath, 'utf8'));
 const appVersion = packageJSON.version;
 
-program
-  .option('-f, --file <string>', 'specify an image file path')
-  .version(appVersion);
+program.option(
+  '-f, --file <string>',
+  'specify an image file path to upload to imgur',
+);
+program.version(appVersion, '-v, --version', 'output the current version');
 program.parse(process.argv);
 const options = program.opts();
 
