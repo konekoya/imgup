@@ -8,7 +8,8 @@ Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/). 
 Usage: imgup [options]
 
 Options:
-  -f, --file <string>  specify an image file path
+  -f, --file <string>  specify an image file path to upload to imgur
+  -v, --version        output the current version
   -h, --help           display help for command
 ```
 
