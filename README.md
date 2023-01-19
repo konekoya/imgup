@@ -2,6 +2,12 @@
 
 Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/). Useful when you're working with Markdown. The output result can be used directly in the Markdown.
 
+## Installation
+
+```sh
+npm install -g imgup
+```
+
 ## Usage
 
 ```sh
@@ -13,16 +19,20 @@ Options:
   -h, --help           display help for command
 ```
 
-## Example
+To upload an image from our test data directory:
 
 ```sh
-imgup --file ./a/path/to/an/image.jpg
+imgup --file ./testData/big-cat.png
 
 # The following output will be shown in your CLI
 ✔ Success
-Image URL: https://i.imgur.com/example.png
-Markdown: ![Example image](https://i.imgur.com/example.png)
+Image URL: https://i.imgur.com/vZq82v6.png
+Markdown: ![Bit-cat image](https://i.imgur.com/vZq82v6.png)
 ```
+
+## Acknowledgement
+
+Big thanks to [Rob Potter](https://unsplash.com/@robpotter) for the test data image
 
 ## TODOs
 
@@ -33,6 +43,6 @@ Markdown: ![Example image](https://i.imgur.com/example.png)
 - [ ] Add GitHub action
 - [ ] Linting
 
-License
+## License
 
 MIT
