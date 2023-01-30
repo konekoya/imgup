@@ -3,10 +3,10 @@
     "module": "ESNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es6",
+    "target": "ES2018",
     "noImplicitAny": true,
     "strictNullChecks": true,
-    "moduleResolution": "node",
+    "moduleResolution": "nodenext",
     "strict": true,
     "sourceMap": true,
     "outDir": "dist",
@@ -15,7 +15,5 @@
     "listEmittedFiles": true,
     "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*"
-  ]
+  "include": ["src/**/*"]
 }
