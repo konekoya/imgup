@@ -1,6 +1,15 @@
 # imgup
 
-Upload images to imgur anonymously via [imgur API](https://apidocs.imgur.com/). Useful when you're working with Markdown. The output result can be used directly in the Markdown.
+A nodeJS CLI tool for uploading images to imgur.com anonymously via [imgur API](https://apidocs.imgur.com/).
+
+## Why
+
+Have you ever wanted to link to an image from the Internet in your markdown but needed to go thur the tedious process of finding a place (usually a place like Dropbox or Google Drive) to upload it and obtain the image URL and finally use it in your markdown. But wait... what's the correct markdown syntax for displaying an image? 😬
+
+Okay, maybe that's just me 😅 But with `imgup` CLI, you can just:
+
+1. Locate the image and upload it from your terminal
+2. Copy the ready-to-used markdown syntax and paste it right in your markdown document (See an example in the usage section)
 
 ## Installation
 
@@ -19,12 +28,12 @@ Options:
   -h, --help           display help for command
 ```
 
-To upload an image from our test data directory:
+Here is an example of uploading an image from our test data directory:
 
 ```sh
 imgup --file ./testData/big-cat.png
 
-# The following output will be shown in your CLI
+# The following output will be shown in your CLI once it's successfully uploaded
 ✔ Success
 Image URL: https://i.imgur.com/mWbxxoM.png
 Markdown: ![Big-cat image](https://i.imgur.com/mWbxxoM.png)
@@ -32,7 +41,7 @@ Markdown: ![Big-cat image](https://i.imgur.com/mWbxxoM.png)
 
 ## Acknowledgement
 
-Big thanks to [Rob Potter](https://unsplash.com/@robpotter) for the test data image
+Big thanks to [Rob Potter](https://unsplash.com/@robpotter) for the demo image
 
 ## TODOs
 
