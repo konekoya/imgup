@@ -26,8 +26,8 @@ imgup --file ./testData/big-cat.png
 
 # The following output will be shown in your CLI
 ✔ Success
-Image URL: https://i.imgur.com/vZq82v6.png
-Markdown: ![Bit-cat image](https://i.imgur.com/vZq82v6.png)
+Image URL: https://i.imgur.com/mWbxxoM.png
+Markdown: ![Big-cat image](https://i.imgur.com/mWbxxoM.png)
 ```
 
 ## Acknowledgement

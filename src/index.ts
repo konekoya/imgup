@@ -1,40 +1,16 @@
 #!/usr/bin/env node
 
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import chalk from 'chalk';
-import { program } from 'commander';
-import * as dotenv from 'dotenv';
 import formData from 'form-data';
 import fs from 'fs';
 import capitalize from 'lodash/fp/capitalize.js';
-import ora from 'ora';
-import path, { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import path from 'path';
+import { createProgram } from './cli.js';
+import { uploadImage } from './utils.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, '../.env') });
-
-// This ID seems not necessary at all, but we're putting it in the request header anyway since it's
-// documented in the official docs
-const CLIENT_ID = process.env.IMGUR_CLIENT_ID;
-
-// There are some crazy issues with the TS and the new module system. So instead of importing the
-// package.json, we will just read it via the fs module... 😢
-const packageJSONFilePath = path.resolve(__dirname, '../package.json');
-const packageJSON = JSON.parse(fs.readFileSync(packageJSONFilePath, 'utf8'));
-const appVersion = packageJSON.version;
-
-program.option(
-  '-f, --file <string>',
-  'specify an image file path to upload to imgur',
-);
-program.version(appVersion, '-v, --version', 'output the current version');
-program.parse(process.argv);
+const program = createProgram();
 const options = program.opts();
-
-const data = new formData();
 const file = options.file as string;
 
 if (!file) {
@@ -45,14 +21,15 @@ if (!file) {
 }
 
 const filePath = path.resolve(process.cwd(), file);
-const baseName = path.basename(filePath);
-const fileName = path.parse(baseName).name;
 
 if (!fs.existsSync(filePath)) {
   console.log(`${filePath} doesn't exist!`);
   process.exit(1);
 }
 
+const data = new formData();
+const baseName = path.basename(filePath);
+const fileName = path.parse(baseName).name;
 data.append('image', fs.createReadStream(filePath));
 data.append('name', fileName);
 data.append('title', fileName);
@@ -61,24 +38,17 @@ const config = {
   method: 'post',
   url: 'https://api.imgur.com/3/upload',
   headers: {
-    Authorization: `Client-ID ${CLIENT_ID}`,
     ...data.getHeaders(),
   },
   data: data,
 } as AxiosRequestConfig;
 
-const spinner = ora('Uploading image to imgur...').start();
+const maybeLink = await uploadImage(config);
 
-axios(config)
-  .then((response: AxiosResponse) => {
-    spinner.succeed('Success');
-    console.log('Image URL:', chalk.bold(response.data.data.link));
-    console.log(
-      'Markdown:',
-      `![${capitalize(fileName)} image](${response.data.data.link})`,
-    );
-  })
-  .catch((error: AxiosError) => {
-    spinner.fail('Failed');
-    console.log(error);
-  });
+if (maybeLink) {
+  console.log('Image URL:', chalk.bold(maybeLink));
+  console.log('Markdown:', `![${capitalize(fileName)} image](${maybeLink})`);
+  process.exit(0);
+} else {
+  process.exit(1);
+}
