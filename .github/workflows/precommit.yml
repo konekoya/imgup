@@ -1,18 +1,23 @@
-name: Build and type checking
+name: validate
 
 on:
+  push:
+    branches:
+      - 'master'
   pull_request:
-    branches: [master]
+    branches:
+      - 'master'
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
+        os: [ubuntu-latest, macos-latest]
         node-version: [16.x, 18.x]
     steps:
-      - name: Checkout code
+      - name: Checkout repo
         uses: actions/checkout@v2
 
       - name: Set up Node.js
