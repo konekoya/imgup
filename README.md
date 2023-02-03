@@ -51,7 +51,7 @@ Big thanks to [Rob Potter](https://unsplash.com/@robpotter) for the demo image
 - [x] Should output markdown image url instead of whole JSON
 - [x] Better error handling
 - [x] Publish to npm registry
-- [ ] Add GitHub action
+- [x] Add GitHub action
 - [ ] Linting
 
 ## License
