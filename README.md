@@ -39,6 +39,8 @@ Image URL: https://i.imgur.com/mWbxxoM.png
 Markdown: ![Big-cat image](https://i.imgur.com/mWbxxoM.png)
 ```
 
+> ProTip 💁‍♂️: You can view your image right in the terminal with [catimg](https://github.com/posva/catimg)
+
 ## Acknowledgement
 
 Big thanks to [Rob Potter](https://unsplash.com/@robpotter) for the demo image
