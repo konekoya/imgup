@@ -1,9 +1,8 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
 import axios, { AxiosRequestConfig } from 'axios';
 import ora from 'ora';
 import Configstore from 'configstore';
+import { PackageMeta } from './types.js';
 
 export async function uploadImage(
   config: AxiosRequestConfig,
@@ -20,12 +19,15 @@ export async function uploadImage(
   }
 }
 
-export function getPackageVersion(): string {
+export function getPackageMeta(): PackageMeta {
   const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-  return packageJson.version as string;
+  return {
+    name: packageJson.name,
+    version: packageJson.version,
+  };
 }
 
 export function createConfigStore() {
-  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
-  return new Configstore(packageJson.name);
+  const { name: appName } = getPackageMeta();
+  return new Configstore(appName);
 }
