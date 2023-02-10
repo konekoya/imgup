@@ -7,12 +7,9 @@ import capitalize from 'lodash/fp/capitalize.js';
 import path from 'path';
 import { createProgram } from './cli.js';
 import { createConfigStore, uploadImage } from './utils.js';
-import dotenv from 'dotenv';
 import inquirer, { Answers } from 'inquirer';
 import fs from 'node:fs';
 import { API_URL, CONFIG_KEY } from './consts.js';
-
-dotenv.config();
 
 const configStore = createConfigStore();
 const program = createProgram();

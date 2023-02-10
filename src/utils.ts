@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'node:fs';
 import axios, { AxiosRequestConfig } from 'axios';
 import ora from 'ora';
 import Configstore from 'configstore';
