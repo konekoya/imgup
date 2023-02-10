@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import path, { dirname } from 'path';
 import axios, { AxiosRequestConfig } from 'axios';
 import ora from 'ora';
+import Configstore from 'configstore';
 
 export async function uploadImage(
   config: AxiosRequestConfig,
@@ -15,15 +16,16 @@ export async function uploadImage(
   } catch (error) {
     spinner.fail('Failed');
     console.log(error);
+    console.dir(error, { depth: Infinity });
   }
 }
 
 export function getPackageVersion(): string {
-  // There are some crazy issues with the TS and the new module system. So instead of importing the
-  // package.json, we will just read it via the fs module... 😢
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = dirname(__filename);
-  const packageJSONFilePath = path.resolve(__dirname, '../package.json');
-  const packageJSON = JSON.parse(fs.readFileSync(packageJSONFilePath, 'utf8'));
-  return packageJSON.version as string;
+  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  return packageJson.version as string;
+}
+
+export function createConfigStore() {
+  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  return new Configstore(packageJson.name);
 }

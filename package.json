@@ -20,10 +20,15 @@
     "imgup": "./dist/index.js"
   },
   "dependencies": {
+    "@types/configstore": "^6.0.0",
+    "@types/inquirer": "^9.0.3",
     "axios": "^1.2.6",
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
+    "configstore": "^6.0.0",
+    "dotenv": "^16.0.3",
     "form-data": "^4.0.0",
+    "inquirer": "^9.1.4",
     "lodash": "^4.17.21",
     "ora": "^6.0.1"
   },
@@ -32,8 +37,8 @@
     "@types/form-data": "^2.5.0",
     "@types/lodash": "^4.14.176",
     "@types/node": "^16.18.11",
-    "typescript": "^4.9.5",
+    "husky": "^4.3.8",
     "prettier": "^2.4.1",
-    "husky": "^4.3.8"
+    "typescript": "^4.9.5"
   }
 }
