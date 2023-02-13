@@ -1,6 +1,6 @@
 # imgup
 
-A nodeJS CLI tool for uploading images to imgur.com anonymously via [imgur API](https://apidocs.imgur.com/).
+A NodeJS CLI tool for uploading images to imgur.com anonymously via [imgur API](https://apidocs.imgur.com/).
 
 ## Why
 
@@ -20,26 +20,36 @@ npm install -g imgup
 ## Usage
 
 ```sh
-Usage: imgup [options]
+Usage: imgup [options] [command]
 
 Options:
-  -f, --file <string>  specify an image file path to upload to imgur
-  -v, --version        output the current version
-  -h, --help           display help for command
+  -v, --version   output the current version
+  -h, --help      display help for command
+
+Commands:
+  upload <image>  upload an image to imgur.com
+  config          add your imgur client ID
+  help [command]  display help for command
 ```
 
 Here is an example of uploading an image from our test data directory:
 
+1. Add your imgur app client ID via the `config` command, see the [API docs](https://apidocs.imgur.com/) on how to obtain one
+
 ```sh
-imgup --file ./testData/big-cat.png
+$ imgup config
+```
+
+2. Upload the image via the `upload` command
+
+```sh
+$ imgup upload ./testData/big-cat.png
 
 # The following output will be shown in your CLI once it's successfully uploaded
 ✔ Success
 Image URL: https://i.imgur.com/mWbxxoM.png
 Markdown: ![Big-cat image](https://i.imgur.com/mWbxxoM.png)
 ```
-
-> ProTip 💁‍♂️: You can view your image right in the terminal with [catimg](https://github.com/posva/catimg)
 
 ## Acknowledgement
 
