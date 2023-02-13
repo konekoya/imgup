@@ -6,10 +6,10 @@ import formData from 'form-data';
 import capitalize from 'lodash/fp/capitalize.js';
 import path from 'path';
 import { createProgram } from './cli.js';
-import { createConfigStore } from './utils.js';
+import { createConfigStore, getFilename, isImage } from './utils.js';
 import inquirer, { Answers } from 'inquirer';
 import fs from 'node:fs';
-import { API_URL, CONFIG_KEY } from './consts.js';
+import { API_URL, CONFIG_KEY } from './const.js';
 import ora from 'ora';
 import { UploadParams, UploadResult } from './types.js';
 
@@ -23,17 +23,16 @@ program
   .description('upload an image to imgur.com')
   .argument('<image>')
   .action(async (imagePath: string) => {
-    const maybeResult = await uploadImage({
+    const maybeLink = await uploadImage({
       clientId: getClientId(),
-      imagePath: resolveImagePath(imagePath),
+      imagePath: await resolveImagePath(imagePath),
     });
 
-    if (maybeResult) {
-      const result = maybeResult;
-      console.log('Image URL:', chalk.bold(result.imageLink));
+    if (maybeLink) {
+      console.log('Image URL:', chalk.bold(maybeLink));
       console.log(
         'Markdown:',
-        `![${capitalize(result.filename)} image](${result.imageLink})`,
+        `![${capitalize(getFilename(imagePath))} image](${maybeLink})`,
       );
       process.exit(0);
     } else {
@@ -68,10 +67,9 @@ function getClientId(): string {
 async function uploadImage({
   imagePath,
   clientId,
-}: UploadParams): Promise<UploadResult | void> {
+}: UploadParams): Promise<string | void> {
   const data = new formData();
-  const baseName = path.basename(imagePath);
-  const fileName = path.parse(baseName).name;
+  const fileName = getFilename(imagePath);
   data.append('image', fs.createReadStream(imagePath));
   data.append('name', fileName);
   data.append('title', fileName);
@@ -90,20 +88,18 @@ async function uploadImage({
   try {
     const res = await axios(config);
     spinner.succeed('Success');
-    return {
-      imageLink: res.data.data.link,
-      filename: fileName,
-    };
+    return res.data.data.link;
   } catch (error) {
     spinner.fail(
       chalk.red("Oops, something went wrong! We're able to upload your image."),
     );
     console.log(chalk.yellow('Did you use a valid Client ID?'));
+    console.dir(error, { depth: Infinity });
   }
 }
 
 // See if the image path is valid
-function resolveImagePath(imagePath: string): string {
+async function resolveImagePath(imagePath: string): Promise<string> {
   const resolvedPath = path.resolve(process.cwd(), imagePath);
 
   if (!fs.existsSync(resolvedPath)) {
@@ -111,7 +107,12 @@ function resolveImagePath(imagePath: string): string {
     process.exit(1);
   }
 
-  return resolvedPath;
+  if (await isImage(resolvedPath)) {
+    return resolvedPath;
+  } else {
+    console.log(`${resolvedPath} is not an image!`);
+    process.exit(1);
+  }
 }
 
 // Ask users for the client ID, and persist in the configstore locally
