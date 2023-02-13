@@ -29,10 +29,10 @@
     "ora": "^6.0.1"
   },
   "devDependencies": {
-    "@types/configstore": "^6.0.0",
-    "@types/inquirer": "^9.0.3",
     "@types/axios": "^0.14.0",
+    "@types/configstore": "^6.0.0",
     "@types/form-data": "^2.5.0",
+    "@types/inquirer": "^9.0.3",
     "@types/lodash": "^4.14.176",
     "@types/node": "^16.18.11",
     "husky": "^4.3.8",
