@@ -33,7 +33,7 @@ program
       console.log('Image URL:', chalk.bold(result.imageLink));
       console.log(
         'Markdown:',
-        `![${capitalize(result.filename)} image](${result})`,
+        `![${capitalize(result.filename)} image](${result.imageLink})`,
       );
       process.exit(0);
     } else {
@@ -90,7 +90,6 @@ async function uploadImage({
   try {
     const res = await axios(config);
     spinner.succeed('Success');
-    console.log(res.data.data);
     return {
       imageLink: res.data.data.link,
       filename: fileName,
