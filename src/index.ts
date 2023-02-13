@@ -16,7 +16,9 @@ import { UploadParams, UploadResult } from './types.js';
 const configStore = createConfigStore();
 
 // CLI
-createProgram()
+const program = createProgram();
+
+program
   .command('upload')
   .description('upload an image to imgur.com')
   .argument('<image>')
@@ -37,11 +39,14 @@ createProgram()
     } else {
       process.exit(1);
     }
-  })
+  });
+
+program
   .command('config')
   .description('add your imgur client ID')
-  .action(() => configureClientId())
-  .parse(process.argv);
+  .action(() => configureClientId());
+
+program.parse(process.argv);
 
 // Load client ID from the configstore
 function getClientId(): string {
