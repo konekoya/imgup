@@ -24,6 +24,7 @@
     "chalk": "^4.1.2",
     "commander": "^10.0.0",
     "configstore": "^6.0.0",
+    "file-type": "^18.2.0",
     "form-data": "^4.0.0",
     "inquirer": "^9.1.4",
     "ora": "^6.0.1"
