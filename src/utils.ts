@@ -1,7 +1,6 @@
+import { fileTypeFromBuffer } from 'file-type';
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileTypeFromBuffer } from 'file-type';
-import Configstore from 'configstore';
 import { PackageMeta } from './types.js';
 
 export function getPackageMeta(): PackageMeta {
@@ -10,11 +9,6 @@ export function getPackageMeta(): PackageMeta {
     name: packageJson.name,
     version: packageJson.version,
   };
-}
-
-export function createConfigStore() {
-  const { name: appName } = getPackageMeta();
-  return new Configstore(appName);
 }
 
 export async function isImage(path: string) {
