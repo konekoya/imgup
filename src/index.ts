@@ -3,17 +3,18 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import chalk from 'chalk';
 import formData from 'form-data';
+import inquirer, { Answers } from 'inquirer';
 import capitalize from 'lodash/fp/capitalize.js';
+import fs from 'node:fs';
+import ora from 'ora';
 import path from 'path';
 import { createProgram } from './cli.js';
-import { createConfigStore, getFilename, isImage } from './utils.js';
-import inquirer, { Answers } from 'inquirer';
-import fs from 'node:fs';
+import ConfigStore from './config-store.js';
 import { API_URL, CONFIG_KEY } from './const.js';
-import ora from 'ora';
-import { UploadParams, UploadResult } from './types.js';
+import { UploadParams } from './types.js';
+import { getFilename, isImage } from './utils.js';
 
-const configStore = createConfigStore();
+const configStore = ConfigStore.getInstance();
 
 // CLI
 const program = createProgram();

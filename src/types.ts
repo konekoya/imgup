@@ -1,8 +1,3 @@
-export type UploadResult = {
-  imageLink: string;
-  filename: string;
-};
-
 export type UploadParams = {
   imagePath: string;
   clientId: string;

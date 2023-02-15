@@ -7,7 +7,7 @@
   "scripts": {
     "format": "prettier --write \"**/**/*.{ts,js,tsx,jsx,md,html,css}\"",
     "format:check": "prettier --check \"**/**/*.{ts,js,tsx,jsx,md,html,css}\"",
-    "build": "tsc",
+    "build": "tsc && chmod +x ./dist/index.js",
     "start": "tsc --watch",
     "typecheck": "tsc --noEmit"
   },
