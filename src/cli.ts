@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
 import ConfigStore from './config-store.js';
-import { API_URL, CONFIG_KEY } from './const.js';
+import { API_URL, CONFIG_KEY, DEFAULT_CLIENT_ID } from './const.js';
 import { UploadParams } from './types.js';
 import { getFilename, getPackageMeta, isImage } from './utils.js';
 
@@ -24,11 +24,20 @@ export function getClientId(): string {
   const clientId: string | undefined = configStore.get(CONFIG_KEY);
   if (clientId === undefined) {
     console.log(
-      chalk.red(
-        'No client ID found in your config. Run `imgup config` to add one.',
+      chalk.yellow(
+        'No client ID found in your config. Using a default client ID. You might encounter API limit by using this one.',
       ),
     );
-    process.exit(1);
+
+    console.log(
+      chalk.yellow(
+        'See https://github.com/konekoya/imgup/blob/master/README.md for more info.',
+      ),
+    );
+
+    // imgur API has a limit for each client, and this default client ID is shared
+    // by users who use our CLI and so it's very like to hit the limit very quick
+    return DEFAULT_CLIENT_ID;
   }
 
   return clientId;
@@ -42,12 +51,7 @@ export function configureClientId() {
       {
         name: 'clientId',
         message: `Enter your client ID:`,
-        validate: async (input) => {
-          if (input.trim() === '') {
-            return 'Please enter a correct client ID';
-          }
-          return true;
-        },
+        validate: validateClientId,
       },
     ])
     .then((answers: Answers) => {
@@ -57,6 +61,13 @@ export function configureClientId() {
       console.log(error);
       process.exit(1);
     });
+}
+
+async function validateClientId(input: string) {
+  if (input.trim() === '') {
+    return 'Please enter a correct client ID';
+  }
+  return true;
 }
 
 // Upload image to the services via the API endpoint, the returned data contains
