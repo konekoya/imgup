@@ -1,7 +1,7 @@
 import ConfigStore from 'configstore';
 import { getPackageMeta } from './utils.js';
 
-export interface ConfigSingleton {
+interface ConfigSingleton {
   get(key: string): string;
   set(key: string, value: string): void;
 }
