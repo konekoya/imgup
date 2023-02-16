@@ -34,13 +34,15 @@ Commands:
 
 Here is an example of uploading an image from our test data directory:
 
-1. Add your imgur app client ID via the `config` command, see the [API docs](https://apidocs.imgur.com/) on how to obtain one
+Add your imgur app client ID via the `config` command, see the [API docs](https://apidocs.imgur.com/) on how to obtain one.
+
+> Note that if you didn't provide a client ID, a default one will be used. But you might encounter API limit issue very quick since the ID is shared for all users who use this CLI. See Q&A for more info about this.
 
 ```sh
 $ imgup config
 ```
 
-2. Upload the image via the `upload` command
+Upload the image via the `upload` command
 
 ```sh
 $ imgup upload ./testData/big-cat.png
@@ -54,6 +56,22 @@ Markdown: ![Big-cat image](https://i.imgur.com/mWbxxoM.png)
 ## Acknowledgement
 
 Big thanks to [Rob Potter](https://unsplash.com/@robpotter) for the demo image
+
+## Q&A
+
+#### What happens to an uploaded image? Will it be deleted?
+
+Generally speaking, no. Images are uploaded to imgur.com, and according to the [announcement](https://en.wikipedia.org/wiki/Imgur#Images), those images will never be deleted unless a deletion request is made.
+
+#### Is it safe to use the default client ID provided by this app?
+
+No. The imgur API we use has a rate limit, which can be quickly reached by users who use this CLI without adding their own imgur app ID. As a result, it's advisable to create your own imgur app ID to avoid exceeding the rate limit. But keep in mind, even with your own client ID added, you can still reach the rate limit if your usage exceeds their limit. From the imgur API [docs](https://apidocs.imgur.com/#intro):
+
+> The Imgur API uses a credit allocation system to ensure fair distribution of capacity. Each application can allow approximately 1,250 uploads per day or approximately 12,500 requests per day. If the daily limit is hit five times in a month, then the app will be blocked for the rest of the month. The remaining credit limit will be shown with each requests response in the X-RateLimit-ClientRemaining HTTP header.
+
+Also, an API upload will deduct 10 credits instead of 1, and this CLI uses upload under the hood for `$imgup upload` command:
+
+> Unless otherwise noted, an API call deducts 1 credit from your allocation. However, uploads have a significantly higher computational cost on our back-end, and deduct 10 credits per call. All OAuth calls, such as refreshing tokens or authorizing users, do not deduct any credits.
 
 ## TODOs
 
