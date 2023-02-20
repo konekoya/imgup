@@ -1,8 +1,9 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import chalk from 'chalk';
-import { Command, program } from 'commander';
+import { program } from 'commander';
 import formData from 'form-data';
 import inquirer, { Answers } from 'inquirer';
+import capitalize from 'lodash/fp/capitalize.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import ora from 'ora';
@@ -13,14 +14,43 @@ import { getFilename, getPackageMeta, isImage } from './utils.js';
 
 const configStore = ConfigStore.getInstance();
 
-export function createProgram(): Command {
+export default function main() {
   const { version: appVersion } = getPackageMeta();
+
   program.version(appVersion, '-v, --version', 'output the current version');
-  return program;
+
+  program
+    .command('upload')
+    .description('upload an image to imgur.com')
+    .argument('<image>')
+    .action(async (imagePath: string) => {
+      const maybeLink = await uploadImage({
+        clientId: getClientId(),
+        imagePath: await resolveImagePath(imagePath),
+      });
+
+      if (maybeLink) {
+        console.log('Image URL:', chalk.bold(maybeLink));
+        console.log(
+          'Markdown:',
+          `![${capitalize(getFilename(imagePath))} image](${maybeLink})`,
+        );
+        process.exit(0);
+      } else {
+        process.exit(1);
+      }
+    });
+
+  program
+    .command('config')
+    .description('add your imgur client ID')
+    .action(() => configureClientId());
+
+  program.parse(process.argv);
 }
 
 // Load client ID from the configstore
-export function getClientId(): string {
+function getClientId(): string {
   const clientId: string | undefined = configStore.get(CONFIG_KEY);
   if (clientId === undefined) {
     console.log(
@@ -45,7 +75,7 @@ export function getClientId(): string {
 
 // Ask users for the client ID, and persist in the configstore locally
 // the config can be found in `~/.config/configstore/imgup.json`
-export function configureClientId() {
+function configureClientId() {
   inquirer
     .prompt([
       {
@@ -72,7 +102,7 @@ async function validateClientId(input: string) {
 
 // Upload image to the services via the API endpoint, the returned data contains
 // the like to the image and the filename from the image file
-export async function uploadImage({
+async function uploadImage({
   imagePath,
   clientId,
 }: UploadParams): Promise<string | void> {
@@ -107,7 +137,7 @@ export async function uploadImage({
 }
 
 // See if the image path is valid
-export async function resolveImagePath(imagePath: string): Promise<string> {
+async function resolveImagePath(imagePath: string): Promise<string> {
   const resolvedPath = path.resolve(process.cwd(), imagePath);
 
   if (!fs.existsSync(resolvedPath)) {
