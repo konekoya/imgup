@@ -23,7 +23,9 @@
     "imgup": "./dist/index.js"
   },
   "files": [
-    "./dist/**/*"
+    "./dist/**/*",
+    "./package.json",
+    "./test-data/**/*"
   ],
   "dependencies": {
     "axios": "^1.2.6",
