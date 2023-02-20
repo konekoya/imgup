@@ -1,7 +1,7 @@
 import ConfigStore from 'configstore';
 import { getPackageMeta } from './utils.js';
 
-interface ConfigSingleton {
+interface Instance {
   get(key: string): string;
   set(key: string, value: string): void;
 }
@@ -14,7 +14,7 @@ class Config {
     this.store = new ConfigStore(appName);
   }
 
-  public static getInstance(): ConfigSingleton {
+  public static getInstance(): Instance {
     if (!Config.instance) {
       Config.instance = new Config();
     }
