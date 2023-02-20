@@ -1,10 +1,13 @@
 import { fileTypeFromBuffer } from 'file-type';
 import fs from 'node:fs';
-import path from 'node:path';
+import path, { dirname } from 'node:path';
+import { fileURLToPath } from 'url';
 import { PackageMeta } from './types.js';
 
 export function getPackageMeta(): PackageMeta {
-  const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+  const __dirname = dirname(fileURLToPath(import.meta.url));
+  const packagePath = path.join(__dirname, '../', 'package.json');
+  const packageJson = JSON.parse(fs.readFileSync(packagePath, 'utf8'));
   return {
     name: packageJson.name,
     version: packageJson.version,
