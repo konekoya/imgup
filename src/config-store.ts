@@ -4,6 +4,7 @@ import { getPackageMeta } from './utils.js';
 interface Instance {
   get(key: string): string;
   set(key: string, value: string): void;
+  has(key: string): boolean;
 }
 
 class Config {
@@ -28,6 +29,10 @@ class Config {
 
   public set(key: string, value: string): void {
     this.store.set(key, value);
+  }
+
+  public has(key: string): boolean {
+    return this.store.has(key);
   }
 }
 
