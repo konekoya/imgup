@@ -2,7 +2,7 @@
 
 A NodeJS CLI tool for uploading images to imgur.com anonymously via [imgur API](https://apidocs.imgur.com/).
 
-## Why
+## Why?
 
 Have you ever wanted to link to an image from the Internet in your markdown but needed to go thur the tedious process of finding a place (usually a place like Dropbox or Google Drive) to upload it and obtain the image URL and finally use it in your markdown. But wait... what's the correct markdown syntax for displaying an image? 😬
 
@@ -39,7 +39,7 @@ Add your imgur app client ID via the `config` command, see the [API docs](https:
 > Note that if you didn't provide a client ID, a default one will be used. But you might encounter API limit issue very quick since the ID is shared for all users who use this CLI. See Q&A for more info about this.
 
 ```sh
-$ imgup config
+$ imgup config # Fill your client ID in the prompt
 ```
 
 Upload the image via the `upload` command
