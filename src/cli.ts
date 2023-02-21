@@ -51,8 +51,8 @@ export default function main() {
 
 // Load client ID from the configstore
 function getClientId(): string {
-  const clientId: string | undefined = configStore.get(CONFIG_KEY);
-  if (clientId === undefined) {
+  const clientId = configStore.has(CONFIG_KEY);
+  if (!clientId) {
     console.log(
       chalk.yellow(
         'No client ID found in your config. Using a default client ID. You might encounter API limit by using this one.',
@@ -70,7 +70,7 @@ function getClientId(): string {
     return DEFAULT_CLIENT_ID;
   }
 
-  return clientId;
+  return configStore.get(CONFIG_KEY);
 }
 
 // Ask users for the client ID, and persist in the configstore locally
